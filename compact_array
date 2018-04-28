@@ -1,0 +1,38 @@
+#include <vector>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+string solution(vector <int> array) {
+	int range = 0, start_index = 0, end_index = 0;
+	string result;
+
+	for (int i = 0; i < array.size(); ++i)
+	{
+		if (((array[i] == array[end_index] + 1)|| (i==0))&& (i != array.size()-1)) //in sequence or first eleemnt, increase the end count
+		{
+			end_index = i; 
+		}
+		else //not in sequence, write previous elements and reset the index
+		{
+			//range :from big to small
+			if (i == array.size() - 1)  end_index = i; //if last element, print this element also
+			range = end_index - start_index;
+			if (range >= 2) result = result + "," + to_string(array[start_index]) + "-" + to_string(array[end_index]);
+			else if (range == 1) result = result + "," + to_string(array[start_index]) + "," + to_string(array[end_index]);
+			else result = result + "," + to_string(array[start_index]);
+
+			start_index = end_index = i; //reset the index
+		}
+
+	}
+	return result.substr(1,result.length()-1);
+}
+
+
+int main()
+{
+	vector<int> v = {12,13,14};
+	cout << solution(v) << endl;
+}
